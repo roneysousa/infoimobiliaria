@@ -1,0 +1,272 @@
+unit uCadEmpred;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  ExtCtrls, ComCtrls, ToolWin, Db, StdCtrls, Mask, DBCtrls, Grids, DBGrids;
+
+type
+  TfrmCadEmpred = class(TForm)
+    ToolBar1: TToolBar;
+    tbPrimeiro: TToolButton;
+    tbAnterior: TToolButton;
+    btProximo: TToolButton;
+    btUltimo: TToolButton;
+    btIncluir: TToolButton;
+    btEditar: TToolButton;
+    btDelete: TToolButton;
+    btGravar: TToolButton;
+    btCancela: TToolButton;
+    btLocalizar: TToolButton;
+    btFechar: TToolButton;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Label1: TLabel;
+    dsEmpredimento: TDataSource;
+    Label2: TLabel;
+    dbeNMEMP: TDBEdit;
+    Label3: TLabel;
+    DBEdit3: TDBEdit;
+    Label4: TLabel;
+    DBEdit4: TDBEdit;
+    DBText1: TDBText;
+    Label5: TLabel;
+    DBEdit1: TDBEdit;
+    Label6: TLabel;
+    DBEdit5: TDBEdit;
+    Label22: TLabel;
+    Label23: TLabel;
+    Label8: TLabel;
+    GridEmpredimento: TDBGrid;
+    Image1: TImage;
+    DBText3: TDBText;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure btGravarClick(Sender: TObject);
+    procedure btDeleteClick(Sender: TObject);
+    procedure btIncluirClick(Sender: TObject);
+    procedure btEditarClick(Sender: TObject);
+    procedure btCancelaClick(Sender: TObject);
+    procedure dsEmpredimentoStateChange(Sender: TObject);
+    procedure dsEmpredimentoDataChange(Sender: TObject; Field: TField);
+    procedure tbPrimeiroClick(Sender: TObject);
+    procedure tbAnteriorClick(Sender: TObject);
+    procedure btProximoClick(Sender: TObject);
+    procedure btUltimoClick(Sender: TObject);
+    procedure btFecharClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure btLocalizarClick(Sender: TObject);
+    procedure GridEmpredimentoDblClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadEmpred: TfrmCadEmpred;
+
+implementation
+
+uses uBD,Funcoes, uNetImo;
+
+{$R *.DFM}
+
+procedure TfrmCadEmpred.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+     dmBD.tbParametros.Close;
+     dmBD.tbEmpredim.Close;
+     //
+     Action := caFree;
+end;
+
+procedure TfrmCadEmpred.FormActivate(Sender: TObject);
+begin
+     If (dmBD.tbParametros.Active= False) Then
+         dmBD.tbParametros.Open;
+     If (dmBD.tbEmpredim.Active= False) Then
+         dmBD.tbEmpredim.open;
+     //
+     uNetImo.JanelaAtiva := 'CADCLIE';
+     frmNetImo.mnuNavegacao.Enabled := True;
+     //
+     GridEmpredimento.Align := alClient;
+     GridEmpredimento.SetFocus;
+end;
+
+procedure TfrmCadEmpred.btGravarClick(Sender: TObject);
+begin
+     Try
+         If (dsEmpredimento.State in [dsInsert]) Then
+         begin
+              dmBD.tbParametros.edit;
+              dmBD.tbParametrosPAR_CDEMPR.Value := dmBD.tbParametrosPAR_CDEMPR.Value+1;
+              dmBD.tbParametros.Post;
+              //
+              dmBD.tbEmpredimEMP_CDEMPR.Value := Funcoes.StrZero(FloattoStr(dmBD.tbParametrosPAR_CDEMPR.Value),5);
+         End;
+         // Gravas as Alterações.
+         dmBD.tbEmpredim.Post;
+         GridEmpredimento.Visible := True;
+     Except
+         Application.MessageBox('Error ao tentar gravar registro.', 'ATENÇÃO',
+                     MB_OK+MB_ICONINFORMATION);
+     End;
+end;
+
+procedure TfrmCadEmpred.btDeleteClick(Sender: TObject);
+begin
+    // Exclusão de registro
+    Try
+        If Application.MessageBox('Deseja eliminar este registro:', 'Exclusão de Empredimento',
+                    MB_YESNO+MB_ICONQUESTION+MB_DEFBUTTON2+MB_APPLMODAL) = ID_YES Then
+           dmBD.tbEmpredim.delete;             // Apagar o regitro atual.
+    Except
+         Application.MessageBox('Este registro não pode ser excluído neste momento', 'ATENÇÃO',
+                     MB_OK+MB_ICONINFORMATION);
+    End;
+end;
+
+procedure TfrmCadEmpred.btIncluirClick(Sender: TObject);
+begin
+     Try
+         GridEmpredimento.Visible := False;
+         dmBD.tbEmpredim.Append;
+         dbeNMEMP.SetFocus; 
+     Except
+         Application.MessageBox('Error ao tentar incluir registro.', 'ATENÇÃO',
+                     MB_OK+MB_ICONINFORMATION);
+     End;
+end;
+
+procedure TfrmCadEmpred.btEditarClick(Sender: TObject);
+begin
+     Try
+         GridEmpredimento.Visible := False;
+         dmBD.tbEmpredim.Edit;
+     Except
+         Application.MessageBox('Error ao tentar editar registro.', 'ATENÇÃO',
+                     MB_OK+MB_ICONINFORMATION);
+     End;
+end;
+
+procedure TfrmCadEmpred.btCancelaClick(Sender: TObject);
+begin
+      dmBD.tbEmpredim.Cancel;
+      GridEmpredimento.Visible := True;
+end;
+
+procedure TfrmCadEmpred.dsEmpredimentoStateChange(Sender: TObject);
+begin
+    tbPrimeiro.Enabled := dsEmpredimento.State in [dsBrowse];
+    tbAnterior.Enabled := dsEmpredimento.State in [dsBrowse];
+    btProximo.Enabled  := dsEmpredimento.State in [dsBrowse];
+    btUltimo.Enabled   := dsEmpredimento.State in [dsBrowse];
+    //
+    btIncluir.Enabled   := dsEmpredimento.State in [dsBrowse];
+    btEditar.Enabled    := dsEmpredimento.State in [dsBrowse];
+    btDelete.Enabled    := (dsEmpredimento.State in [dsBrowse])
+        and (DmBD.tbEmpredim.RecordCount > 0);
+    //
+    btGravar.Enabled    := dsEmpredimento.State in [dsInsert,dsEdit];
+    btCancela.Enabled   := dsEmpredimento.State in [dsInsert,dsEdit];
+    //
+    btLocalizar.Enabled   := dsEmpredimento.State in [dsBrowse];
+    btFechar.Enabled      := dsEmpredimento.State in [dsBrowse];
+    // barra de status
+     If dsEmpredimento.State in [dsInsert] Then
+         frmNetImo.barStatus.Panels[3].Text := 'Modo de inserção';
+     If dsEmpredimento.State in [dsEdit] Then
+         frmNetImo.barStatus.Panels[3].Text := 'Modo de edição';
+     If dsEmpredimento.State in [dsBrowse] Then
+         frmNetImo.barStatus.Panels[3].Text := 'Modo de navegação';
+     // menus principal
+     frmNetImo.mnuPrimeiroItem.Enabled := dsEmpredimento.State in [dsBrowse];
+     frmNetImo.mnuAnteriorItem.Enabled := dsEmpredimento.State in [dsBrowse];
+     frmNetImo.mnuProximoItem.Enabled  := dsEmpredimento.State in [dsBrowse];
+     frmNetImo.mnuUltimoItem.Enabled   := dsEmpredimento.State in [dsBrowse];
+     //
+     frmNetImo.mnuAdicionarItem.Enabled := dsEmpredimento.State in [dsBrowse];
+     frmNetImo.mnuEditarItem.Enabled    := dsEmpredimento.State in [dsBrowse];
+     frmNetImo.mnuExcluirItem.Enabled   := dsEmpredimento.State in [dsBrowse];
+     //
+     frmNetImo.mnuGravarItem.Enabled   := dsEmpredimento.State in [dsInsert,dsEdit];
+     frmNetImo.mnuCancelarItem.Enabled := dsEmpredimento.State in [dsInsert,dsEdit];
+end;
+
+procedure TfrmCadEmpred.dsEmpredimentoDataChange(Sender: TObject;
+  Field: TField);
+begin
+     // barra de status
+     frmNetImo.barStatus.Panels[2].Text := ' Registro: ' + IntToStr(dsEmpredimento.DataSet.RecNo) +
+                          ' de ' + IntToStr(dsEmpredimento.DataSet.RecordCount);
+end;
+
+procedure TfrmCadEmpred.tbPrimeiroClick(Sender: TObject);
+begin
+     If Not (dmBD.tbEmpredim.bof) Then
+          dmBD.tbEmpredim.First;
+end;
+
+procedure TfrmCadEmpred.tbAnteriorClick(Sender: TObject);
+begin
+     If Not (dmBD.tbEmpredim.bof) Then
+          dmBD.tbEmpredim.Prior;
+end;
+
+procedure TfrmCadEmpred.btProximoClick(Sender: TObject);
+begin
+     If Not (dmBD.tbEmpredim.Eof) Then
+          dmBD.tbEmpredim.Next;
+end;
+
+procedure TfrmCadEmpred.btUltimoClick(Sender: TObject);
+begin
+     If Not (dmBD.tbEmpredim.Eof) Then
+          dmBD.tbEmpredim.Last;
+end;
+
+procedure TfrmCadEmpred.btFecharClick(Sender: TObject);
+begin
+     Close;
+end;
+
+procedure TfrmCadEmpred.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
+begin
+     If (dsEmpredimento.State in [dsInsert,dsEdit]) Then
+     begin
+         If Application.MessageBox('Salvar alterações?',
+                  'ATENÇÃO', MB_YESNO+MB_ICONQUESTION+MB_APPLMODAL) = idYes then
+             dmBD.tbEmpredim.Post
+         Else
+             dmBD.tbEmpredim.Cancel;
+     End;
+end;
+
+procedure TfrmCadEmpred.btLocalizarClick(Sender: TObject);
+Var
+    M_NMEMPR : String;
+begin
+    M_NMEMPR := InputBox('Localizar','Digite o nome do Empreendimento?','');
+    If Not funcoes.Empty(M_NMEMPR) Then
+    begin
+         If not (dmBD.tbEmpredim.Locate('EMP_NMEMPR',M_NMEMPR,
+                 [loCaseInsensitive,loPartialKey])) Then
+         begin
+              Application.MessageBox('Empreendimento não encontado.',
+                         'ATENÇÃO', MB_OK+MB_ICONINFORMATION);
+              Exit;
+         End;
+    End;
+end;
+
+procedure TfrmCadEmpred.GridEmpredimentoDblClick(Sender: TObject);
+begin
+     btEditarClick(Sender);
+end;
+
+end.

@@ -1,0 +1,61 @@
+           // Vencimento apos 30 dias
+           //If (dmBD.tbPrestacoesPRE_DTVENC.Value+30 <= Date())Then
+           If (M_QTDIAS > 30) and (M_QTDIAS <= 60) Then
+           begin
+              M_VLSUBT := M_VLANTE+M_VLMULT;
+              //Funcoes.Gerapercentual(M_VLANTE,M_VLMULT);
+              M_VLCORR := M_VLSUBT-M_VLANTE;
+              //
+              {If (dmBD.tbPrestacoesPRE_FLJUAC.Value= True) Then
+              begin
+                   M_VLTOTAL := M_VLSUBT+(M_PEJURO/30*M_QTDIAS);
+                   //M_VLTOTAL := M_VLSUBT+(M_PEJURO/30*M_QTDIAS);
+                   M_VLJURO  := M_VLTOTAL-M_VLSUBT;
+                   //Funcoes.Gerapercentual(M_VLSUBT,M_PEJURO)*100;
+              End
+              Else
+              begin}
+                   M_VLTOTAL := M_VLSUBT+(M_PEJURO/30*M_QTDIAS);
+                   M_VLJURO  := M_VLTOTAL-M_VLSUBT;
+                   //Funcoes.Gerapercentual(M_VLSUBT,M_PEJURO)*100;
+             // End;
+           End;
+           // Vencimento apos 60 dias
+           //If (dmBD.tbPrestacoesPRE_DTVENC.Value+60 <= Date())Then
+           If (M_QTDIAS > 60)Then
+           begin
+              //
+              If (dmBD.tbPrestacoesPRE_FLJUAC.Value= True) Then
+              begin
+                   M_VLSUBT := M_VLANTE+M_VLMULT;
+                   M_VLCORR := M_VLSUBT-M_VLANTE;
+                   M_VLTOTAL := M_VLSUBT+M_VLMULT+(M_PEJURO/30*M_QTDIAS);
+                   M_VLJURO  := M_VLTOTAL-M_VLSUBT;
+              End
+              Else
+              begin
+                   M_VLSUBT := M_VLANTE+(M_PECORR/30*M_QTDIAS);
+                   M_VLCORR := M_VLSUBT-M_VLANTE;
+                   M_VLTOTAL := M_VLSUBT+(M_PEJURO/30*M_QTDIAS);
+                   M_VLJURO  := M_VLTOTAL-M_VLSUBT;
+              End;
+              //
+           End;
+
+
+//
+                 //
+                 If (dmBD.tbPrestacoesPRE_FLJUAC.Value= True) Then
+                     M_FLACUM2 := True
+                 Else
+                     M_FLACUM2 := False;
+                 //
+                 M_ULSUBT  := dmBD.tbPrestacoesPRE_VLSUBT.Value;
+                 M_ULTOTA  := dmBD.tbPrestacoesPRE_TOTAL.Value;
+           End;                 // fim-do-se quant. dias > data contrato
+         {Else
+         Begin
+             M_VLANTE1 := dmBD.tbPrestacoesPRE_TOTAL.Value;
+             M_UTSUBT  := dmBD.tbPrestacoesPRE_VLSUBT.Value;
+             M_ULTOTA  := dmBD.tbPrestacoesPRE_TOTAL.Value;
+         End;}

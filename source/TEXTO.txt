@@ -1,0 +1,168 @@
+procedure TfrmTitulosLista.Carregar_Movimento;
+Var
+   M_NRCART,M_DTREFE,M_NMCRE :String;
+   M_NMPLAN,M_TPMOVI:String;
+   M_DEBITO, M_CREDI:String;
+   M_VLPARC,M_TODEBI,M_TOCRED:Double;
+begin
+   //
+   M_TODEBI := 0;
+   M_TOCRED := 0;
+   // M_NRFATU := dmBoletos.tbBoletosBOL_NRFATU.Value;
+   // M_NRCART := dmBoletos.tbBoletosBOL_NRCART.Value;
+   M_NRFATU := dmBoletos.QryBoletosBOL_NRFATU.Value;
+   M_NRCART := dmBoletos.QryBoletosBOL_NRCART.Value;
+   If (dmBoletos.tbAccCli.Locate('CLI_NRCART',M_NRCART,[])) Then
+   begin
+        With repBoletoPersonalizado do
+        begin
+             txtLimiteCredito.Caption := 'R$ '+FormatFloat('#,##0.00',dmBoletos.tbAccCliCLI_LIMANA.Value);
+        End;
+   End;
+   repBoletoPersonalizado.txtMovimentacao.Lines.Clear;
+   // Aplica o filtro
+   dmBoletos.qryAccBom.Close;
+   dmBoletos.qryAccBom.sql.Clear;
+   dmBoletos.qryAccBom.sql.Add('SELECT * FROM ACCBOM');
+   dmBoletos.qryAccBom.sql.Add('WHERE BOM_NRFATU = "' + M_NRFATU + '" ');
+   //dmBoletos.qryAccBom.sql.Add('AND BOM_NRCART = "' + M_NRCART + '" ');
+   dmBoletos.qryAccBom.Open;
+   //
+   //dmBoletos.tbAccBom.Filter   := '(BOM_NRFATU='''+M_NRFATU+''') and (BOM_NRCART='+'''M_NRCART'''+')';
+   //dmBoletos.tbAccBom.Filter   :='BOM_NRCART='+M_NRCART;
+   //dmBoletos.tbAccBom.Filter   := 'BOM_NRFATU='+M_NRFATU;
+   //M_NRFATU;
+   dmBoletos.tbAccBom.Filtered := True;
+   //
+   repBoletoPersonalizado.txtDebito.Lines.Clear;
+   repBoletoPersonalizado.txtCretido.Lines.Clear;
+   //
+   While Not (dmBoletos.tbAccBom.Eof) do
+   begin
+      M_CREDI := '';
+      M_DEBITO:= '';
+      //
+      If (M_NRFATU = dmBoletos.tbAccBomBOM_NRFATU.Value) and
+             (M_NRCART = dmBoletos.tbAccBomBOM_NRCART.Value) Then
+      Begin                     
+        dmBoletos.tbAccBom.Edit;
+        M_DTREFE := dmBoletos.tbAccBomBOM_DTREFE.Value;     M_NMCRE  := dmBoletos.tbAccBomBOM_NMCRED.Value;
+        M_NMPLAN := dmBoletos.tbAccBomBOM_NMPLAN.Value;     M_VLPARC := dmBoletos.tbAccBomBOM_VLPARC.Value;
+        M_TPMOVI := dmBoletos.tbAccBomBOM_TPMOVI.Value;
+        //
+        If Empty(M_NMPLAN) Then
+           M_NMPLAN := tbReplChar(' ',10);
+
+        //
+        If M_TPMOVI <> 'C' Then
+        Begin
+            M_TODEBI := M_TODEBI+M_VLPARC;
+            //M_DEBITO := FormatFloat('#,##0.00',M_VLPARC);
+            M_DEBITO := Format('%-10.2f',[M_VLPARC]);
+        End
+        Else
+        Begin
+            M_TOCRED := M_TOCRED+M_VLPARC;
+            //M_CREDI  := FormatFloat('#,##0.00',M_TOCRED);
+            M_CREDI := Format('%-10.2f',[M_VLPARC]);
+
+        End;
+         //
+          with repBoletoPersonalizado do
+          begin
+             With txtMovimentacao.Lines do
+             begin
+                       Add(' '+Format('%-6s',[M_DTREFE])+tbReplChar(' ',04)+Padr(Format('%-20s',[M_NMCRE]),20)+
+                       tbReplChar(' ',10)+Format('%-10s',[M_NMPLAN]));
+             End;       // Fim-do-With - txtMovimentacao.Lines
+             // Valore do Debito
+             txtDebito.Lines.Add(M_DEBITO);
+             // Valores de credito
+             txtCretido.Lines.Add(M_CREDI);
+          end;          // Fim-do-With - repBoletoPersonalizado
+      End;                      // Fim-do-se.
+        dmBoletos.tbAccBom.Next;
+    End;              // Fim-do-Enquanto.
+    // Libera o filtro.
+    dmBoletos.tbAccBom.Filtered := False;
+    //
+    //M_SLANTE := StrtoFloat(dmBoletos.tbBoletosBOL_VLANTE.AsString);
+    M_CREDIT := StrtoFloat(dmBoletos.tbBoletosBOL_VLCRED.AsString);
+    M_SLANTE := StrtoFloat(dmBoletos.QryBoletosBOL_VLANTE.AsString);
+    M_CREDIT := StrtoFloat(dmBoletos.QryBoletosBOL_VLCRED.AsString);
+
+    M_SLREST := M_SLANTE - M_TOCRED;
+    //
+    With repBoletoPersonalizado do
+    begin
+        txtSaldoAnt.Caption  := Format('%15.2m',[StrtoFloat(dmBoletos.QryBoletosBOL_VLANTE.AsString)]);
+        //txtCreditoPg.Caption := Format('%15.2m',[StrtoFloat(dmBoletos.tbBoletosBOL_VLCRED.AsString)]);
+        txtCreditoPg.Caption := Format('%15.2m',[M_TOCRED]);
+        txtSaldoRest.Caption := Format('%15.2M',[M_SLREST]);
+        txtDebitoPer.Caption := Format('%15.2M',[M_TODEBI]);
+        //
+        M_VLDOCU := M_SLREST + M_TODEBI;
+        gbTitulo1.ValorDocumento := dmBoletos.QryBoletosBOL_VLDOCU.Value ;
+        txtValor.Caption := FormatFloat('R$ #,##0.00',gbTitulo1.ValorDocumento);
+        txtValor2.Caption := txtValor.Caption;
+        txtPagamentoM.Caption := 'R$ '+FormatFloat('#,##0.00',gbTitulo1.ValorDocumento);
+        //
+        //txtMovimentacao.Lines.Add(tbReplChar('-',89));
+        txtMovimentacao.Lines.Add(' ');
+        txtMovimentacao.Lines.Add('  SUBTOTAL DESPESAS/ENCARGOS:');
+        //
+        txtDebito.Lines.Add(' ');
+        txtDebito.Lines.Add(Format('%-10.2f',[M_TODEBI]));
+        //
+        txtCretido.Lines.Add(' ');
+        txtCretido.Lines.Add(Format('%-10.2f',[M_TOCRED]));
+    End;
+
+
+
+VISUALIZAR BOLETO
+
+      Carregar_Movimento;            //carregar dados para o estratro.
+      //Carregar_Dados;                // Carrega informações do cedente
+      PrepararTitulo;
+      with repBoletoPersonalizado do
+      begin
+         cPapersize :=
+         Page.PaperSize;
+         ReportTitle := 'Visualização de Boletos - Cliente: '+dmBoletos.QryBoletosBOL_NMSACA.Value;
+         //
+         txtNumeroDoc.Caption    := dmBoletos.QryBoletosBOL_NRDOCU.Value;
+         txtAgeCedente.Caption   := gbTitulo1.Cedente.ContaBancaria.fCodigoAgencia+'.'+gbTitulo1.Cedente.CodigoCedente+'-'+gbTitulo1.Cedente.DigitoCodigoCedente;
+         txtCodigoBarras.Caption := gbTitulo1.CodigoBarra.LinhaDigitavel;
+         txtNossoNumero1.Caption := gbTitulo1.NossoNumero + '-' + gbTitulo1.DigitoNossoNumero;
+         txtAgCdCedente.Caption  := txtAgeCedente.Caption;
+         //gbTitulo1.Cedente.ContaBancaria.fCodigoAgencia+'.'+gbTitulo1.Cedente.CodigoCedente;
+         // Carrega informações do sacado
+         with txtSacado.Lines do
+         begin
+            Clear;
+            Add('  '+gbTitulo1.Sacado.Nome);
+            Add('  Cartão: '+dmBoletos.QryBoletosBOL_NRCART.Value);
+            If (dmBoletos.QryBoletosBOL_TPPESS.Value ='F') Then
+                Add('  CPF: '+gbTitulo1.Sacado.NumeroCPFCGC)
+            Else
+                Add('  CGC: '+gbTitulo1.Sacado.NumeroCPFCGC);
+            Add('  '+gbTitulo1.Sacado.Endereco.Rua + ' ' + gbTitulo1.Sacado.Endereco.Numero + ' ' + gbTitulo1.Sacado.Endereco.Complemento+'  -  '+gbTitulo1.Sacado.Endereco.Bairro);
+            // Add('  ');
+            Add('  '+gbTitulo1.Sacado.Endereco.CEP + '  ' + gbTitulo1.Sacado.Endereco.Cidade + '-' + gbTitulo1.Sacado.Endereco.Estado);
+         end;
+         //
+         txtNossoNumero.Caption := gbTitulo1.NossoNumero + '-' + gbTitulo1.DigitoNossoNumero;
+         txtCdBaixa.Caption     := txtNossoNumero1.Caption;
+         If (dmBoletos.QryBoletosBOL_TPPESS.Value ='F') Then
+               txtCPF.Caption         := 'CPF:'+gbTitulo1.Sacado.NumeroCPFCGC
+         Else
+               txtCPF.Caption         := 'CGC:'+gbTitulo1.Sacado.NumeroCPFCGC;
+         //
+         //txtValor.Caption := FormatFloat('R$ #,##0.00',gbTitulo1.ValorDocumento);
+         //
+         //txtInstrucoes2.Lines.Text := txtInstrucoes.Lines.Text;
+         //imgFichaCompensacao.Picture.Assign(gbTitulo1.ImagemFichaCompensacao.Picture);
+         imgCodeBarras.Picture.Assign(gbTitulo1.CodigoBarra.Imagem.Picture);   
+         Preview;
+      end;

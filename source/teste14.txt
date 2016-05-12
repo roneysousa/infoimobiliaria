@@ -1,0 +1,65 @@
+100,00		101,00		102,01
+ 56,90		57,469		58,0447
+ 52,55		53,0755		53,6108
+ 70,00		70,70		71,407	
+
+
+//
+                           If (dmBD.tbPrestacoesPRE_DIASAT.Value <= 0)
+                             or (dmBD.tbPrestacoesPRE_DIASAT.Value > 30) Then
+                           begin
+                               //If (dmBD.tbPrestacoesPRE_QTDIAS.Value > 30)
+                               //If (M_DTBASE < Date()) Then
+                               If (dmBD.tbPrestacoesPRE_DTVENC.Value >= Date()) Then
+                               Begin
+                                //
+                                dmBD.tbPrestacoesPRE_VLSUBT.Value := dmBD.tbPrestacoesPRE_VLANTE.Value+Funcoes.Gerapercentual(dmBD.tbPrestacoesPRE_VLANTE.Value,dmBD.tbPrestacoesPRE_PECORR.Value);
+                                dmBD.tbPrestacoesPRE_VLCORR.Value := dmBD.tbPrestacoesPRE_VLSUBT.Value-dmBD.tbPrestacoesPRE_VLANTE.Value;
+                                dmBD.tbPrestacoesPRE_TOTAL.Value  := dmBD.tbPrestacoesPRE_VLSUBT.Value+Funcoes.Gerapercentual(dmBD.tbPrestacoesPRE_VLSUBT.Value,dmBD.tbPrestacoesPRE_PEJURO.Value);
+                                dmBD.tbPrestacoesPRE_VLJURO.Value := dmBD.tbPrestacoesPRE_TOTAL.Value-dmBD.tbPrestacoesPRE_VLSUBT.Value;
+                                //
+                                dmBD.tbPrestacoesPRE_DTBASE.Value := M_DTBASE;
+                                //IncMonth(dmBD.tbPrestacoesPRE_DTBASE.Value,1);
+                                If (dmBD.tbPrestacoesPRE_FLJUAC.Value = False) Then
+                                      dmBD.tbPrestacoesPRE_VLANTE.Value := dmBD.tbPrestacoesPRE_TOTAL.Value
+                                Else
+                                      dmBD.tbPrestacoesPRE_VLANTE.Value := dmBD.tbPrestacoesPRE_VLSUBT.Value;
+                                //
+                               End;
+                               //
+                               {If (dmBD.tbPrestacoesPRE_QTDIAS.Value > 30)
+                                 and (dmBD.tbPrestacoesPRE_DTVENC.Value < Date()) Then
+                               Begin
+                                //
+                                dmBD.tbPrestacoesPRE_VLSUBT.Value := dmBD.tbPrestacoesPRE_VLANTE.Value+Funcoes.Gerapercentual(dmBD.tbPrestacoesPRE_VLANTE.Value,dmBD.tbPrestacoesPRE_PECORR.Value);
+                                dmBD.tbPrestacoesPRE_VLCORR.Value := dmBD.tbPrestacoesPRE_VLSUBT.Value-dmBD.tbPrestacoesPRE_VLANTE.Value;
+                                dmBD.tbPrestacoesPRE_TOTAL.Value  := dmBD.tbPrestacoesPRE_VLSUBT.Value+Funcoes.Gerapercentual(dmBD.tbPrestacoesPRE_VLSUBT.Value,dmBD.tbPrestacoesPRE_PEJURO.Value);
+                                dmBD.tbPrestacoesPRE_VLJURO.Value := dmBD.tbPrestacoesPRE_TOTAL.Value-dmBD.tbPrestacoesPRE_VLSUBT.Value;
+                                //
+                                dmBD.tbPrestacoesPRE_DTBASE.Value := M_DTBASE;
+                                //IncMonth(dmBD.tbPrestacoesPRE_DTBASE.Value,1);
+                               End;}
+                         End;
+                         // 2ª Situação - prestação atrasada
+                         {If (dmBD.tbPrestacoesPRE_DTVENC.Value < Date()) then
+                         begin
+                           If (dmBD.tbPrestacoesPRE_QTDIAS.Value > 30)
+                             and (dmBD.tbPrestacoesPRE_FLATRA.Value = 'N') Then
+                           begin
+                              dmBD.tbPrestacoesPRE_VLSUBT.Value := dmBD.tbPrestacoesPRE_VLANTE.Value+Funcoes.Gerapercentual(dmBD.tbPrestacoesPRE_VLANTE.Value,dmBD.tbPrestacoesPRE_PECORR.Value);
+                              dmBD.tbPrestacoesPRE_VLCORR.Value := dmBD.tbPrestacoesPRE_VLSUBT.Value-dmBD.tbPrestacoesPRE_VLANTE.Value;
+                              dmBD.tbPrestacoesPRE_TOTAL.Value  := dmBD.tbPrestacoesPRE_VLSUBT.Value+Funcoes.Gerapercentual(dmBD.tbPrestacoesPRE_VLSUBT.Value,dmBD.tbPrestacoesPRE_PEJURO.Value);
+                              dmBD.tbPrestacoesPRE_VLJURO.Value := dmBD.tbPrestacoesPRE_TOTAL.Value-dmBD.tbPrestacoesPRE_VLSUBT.Value;
+                              //
+                              If (dmBD.tbPrestacoesPRE_DIASAT.Value<=30) Then
+                                 //
+                                  dmBD.tbPrestacoesPRE_DTBASE.Value := dmBD.tbPrestacoesPRE_DTVENC.Value
+                              Else
+                              Begin
+                                  dmBD.tbPrestacoesPRE_FL30DIA.Value := 'S';
+                                  dmBD.tbPrestacoesPRE_DTBASE.Value  := IncMonth(dmBD.tbPrestacoesPRE_DTBASE.Value,1);
+                              End;
+                           End;
+                           //
+                           dmBD.tbPrestacoesPRE_FLATRA.Value := 'S';
+                         End;}

@@ -1,0 +1,57 @@
+unit uSeleImovel;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Grids, DBGrids, StdCtrls, Buttons, ExtCtrls;
+
+type
+  TfrmSeleImovel = class(TForm)
+    Panel1: TPanel;
+    Image1: TImage;
+    Label1: TLabel;
+    edtTEXTO: TEdit;
+    Panel3: TPanel;
+    btFechar: TBitBtn;
+    dbGridPesq: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btFecharClick(Sender: TObject);
+    procedure dbGridPesqDblClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmSeleImovel: TfrmSeleImovel;
+
+implementation
+
+Uses uContrato, uBD;
+
+{$R *.DFM}
+
+procedure TfrmSeleImovel.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+     Action :=  caFree;
+end;
+
+procedure TfrmSeleImovel.btFecharClick(Sender: TObject);
+begin
+      Close;
+end;
+
+procedure TfrmSeleImovel.dbGridPesqDblClick(Sender: TObject);
+begin
+     dmBD.tbImoveis.Edit;
+     dmBD.tbContratosCTC_CDIMOV.Value := dmBD.tbImoveisIMO_CDIMOV.Value;
+     dmBD.tbContratosCTC_VLIMOV.Value := dmBD.tbImoveisIMO_VLIMOV.Value;
+     dmBD.tbImoveis.Cancel;
+     //
+     Close;
+end;
+
+end.

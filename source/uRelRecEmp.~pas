@@ -1,0 +1,23 @@
+unit uRelRecEmp;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs;
+
+type
+  TfrmRelRecEmp = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelRecEmp: TfrmRelRecEmp;
+
+implementation
+
+{$R *.DFM}
+
+end.

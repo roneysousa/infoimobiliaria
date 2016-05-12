@@ -1,0 +1,681 @@
+object frmRecebimentos: TfrmRecebimentos
+  Left = 249
+  Top = 206
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Recebimentos de Contas'
+  ClientHeight = 436
+  ClientWidth = 786
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Position = poScreenCenter
+  ShowHint = True
+  Visible = True
+  WindowState = wsMaximized
+  OnActivate = FormActivate
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 786
+    Height = 436
+    Align = alClient
+    TabOrder = 0
+    object Panel2: TPanel
+      Left = 1
+      Top = 1
+      Width = 784
+      Height = 55
+      Align = alTop
+      Alignment = taLeftJustify
+      BevelInner = bvLowered
+      BevelWidth = 2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -35
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold, fsItalic]
+      ParentFont = False
+      TabOrder = 0
+      object Image1: TImage
+        Left = 8
+        Top = 6
+        Width = 40
+        Height = 40
+        Picture.Data = {
+          07544269746D6170F6000000424DF60000000000000076000000280000001000
+          0000100000000100040000000000800000000000000000000000100000000000
+          000000000000000080000080000000808000800000008000800080800000C0C0
+          C000808080000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
+          FF00777700000000077777000880000000070008800880000007088008888300
+          0007000888438800000770883434388000077783434343883007770734343438
+          8807777883434388883777708834388980377777008888808037777777003000
+          3807777777703038800777777770888007777777777000077777777777777777
+          7777}
+        Stretch = True
+      end
+      object EncartaButton1: TEncartaButton
+        Left = 872
+        Top = 18
+        Width = 138
+        Height = 22
+        Hint = 'Selecione outros cliente'
+        Caption = 'Selecionar Cliente...'
+        Color = clBtnFace
+        ColorBorder = 8556441
+        Enabled = True
+        OnClick = EncartaButton1Click
+        Glyph.Data = {
+          36030000424D3603000000000000360000002800000010000000100000000100
+          18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFB44A08C7521CEC6145F7634FF6654FFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFB64B0BCD5422
+          F06148F86F56F97A5BF9816AF76C58F15B46A25C27FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFBD4C11D4562BF67458FC8865FC8764FDD3CAFAA497E9
+          543B9C5922008F0014AE2B20C0504ECB655AC558019400008000C54F1ADF6139
+          FE8968FF875FFFAC94FFFFFFFFC9BCEE664797561B11A42532D46E33D05EAEF5
+          AEB2F3B313A922008201FF00FFDF6139FF8B64C6705BABA2A5C3CACDECA18CFE
+          7856A765281AB53726C15644A153A8C4A582C98027BF49078D12FF00FFFF00FF
+          5C617F336AAC2370BD2569A98C676DFF00FFFF00FF06380C0631111531671A33
+          8016445723A74BFF00FFFF00FF2080B71A83DC309FFF339DFF2B93F62E81D0FF
+          00FF020C160000000814481342B00F3FAE0F35A012418FFF00FF3282A33F9AD3
+          44ACFF45AEFF45AEFD46AFFF3FACFE2687D1020C12020611184DA81F61D11D5C
+          C41E5DC71950C10727A13282A345A4E04BB4FF4AB1FD47ADF847ADF94CB6FF3A
+          96DA030B0E030F202269CC2572E02166CE226DD72269D31C50B43282A33282A3
+          46A2D348AAE84AB1FC4AAFFA4DB6FF358CD0050C1205070B206ABA3197FF2F8D
+          F53091F92879DE205EAF3282A33282A33282A348A6DD4EB6FE4EB7FF49B0F622
+          6A9F060D1326201A243E571E69AF277ECD2D85D41A4D8A205EAFFF00FF3282A3
+          3282A33282A33282A33282A33282A3FF00FFFF00FF2A28266A666160605F2029
+          33071321030817FF00FFFF00FFFF00FF3282A33282A33282A33282A3FF00FFFF
+          00FFFF00FFFF00FF5253535C5A58221E1A000000FF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+        ColorOverCaption = clBlack
+        ColorOver = 704216
+        ColorDown = 704216
+        ShowCaption = True
+        ShowHint = True
+        ParentShowHint = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+      end
+      object DBText2: TDBText
+        Left = 49
+        Top = 11
+        Width = 149
+        Height = 37
+        AutoSize = True
+        DataField = 'PRE_NMCLIE'
+        DataSource = dsPrestacoes
+        Transparent = True
+      end
+    end
+    object Panel4: TPanel
+      Left = 1
+      Top = 395
+      Width = 784
+      Height = 40
+      Align = alBottom
+      TabOrder = 1
+      object enbConfimar: TEncartaButton
+        Left = 763
+        Top = 10
+        Width = 153
+        Height = 22
+        Caption = 'Confirmar Pagamento'
+        Color = clBtnFace
+        ColorBorder = 8556441
+        Enabled = True
+        OnClick = enbConfimarClick
+        Glyph.Data = {
+          36030000424D3603000000000000360000002800000010000000100000000100
+          18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+          FF00FFFF00FFFF00FF331400451B00572200572200471C00361600FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF491C00491C00803200A54100AA
+          4200AA4200A74100843400511F00511F00FF00FFFF00FFFF00FFFF00FFFF00FF
+          5923006E2B00AF4400B14500AA4200A54100AA4200AA4200AF4400B14500702C
+          00361600FF00FFFF00FFFF00FF5923007B3000C54D00B84800AA4200A54100A5
+          4100A74100A74100A74100AA4200B14500702C00511F00FF00FFFF00FF592300
+          D45300CC5000BB4900AA4200B25510F3E3D4F8EFE7C67F42A74100A74100AA42
+          00B14500511F00FF00FF5F2500A03F00EB5C00CC5000B14500AC4300AA4603DA
+          AA7EFFFFFFFCF8F4C4793AA74100A74100AF4400843400451B005F2500D75400
+          EB5C00D45300B14500AA4200AC4300AA4200D5A06FFEFEFCFCF7F3C27738A741
+          00AC43009E3E00451B00772E00F66000F86200FED5AFF8D1ACF4CFABF8D0ABF7
+          CEA6F6CFAAFCF8F6FFFFFFFAF4EECB894FAA4200AA42004F1F00893500FF7813
+          FF6A04FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFCFFFFFFFFFFFFE6C6
+          A7AC4300AA4200572200893500FF8829FF801EF48931FC8C32FC8C31FC8C31F8
+          8225EDA566FEFBF8FFFFFFE9B88CC75A0BB84800A541004B1D00893500FF801E
+          FFAD67FF6400EE5D00FB6300FB6300FC8B30FCEBDAFFFFFFEAAF79CF5200C54D
+          00BB4900953A004B1D00FF00FFE65A00FFC693FF9842E15800EB5C00FB7511FF
+          F8F2FFFFFFF0AC70CF5200CA4F00C04B00C74E00752D00FF00FFFF00FFE65A00
+          FF892BFFDAB7FF9741F86200EA6405FCC695FEB87AE35C01D95500D45300D754
+          00B44600752D00FF00FFFF00FFFF00FFC54D00FF9842FFE2C6FFBB7FFF8728FF
+          750FFF6B05FF6E08FF6E08FF6701CA4F00702C00FF00FFFF00FFFF00FFFF00FF
+          FF00FFFF801EFF801EFFBA7DFFD5ADFFC591FFB574FFA558FF8323D75400D754
+          00FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE15800FF700AFF
+          7D19FF7813FB6300B64700FF00FFFF00FFFF00FFFF00FFFF00FF}
+        ColorOverCaption = clBlack
+        ColorOver = 704216
+        ColorDown = 704216
+        ShowCaption = True
+        ShowHint = True
+        ParentShowHint = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+      end
+      object EncartaButton4: TEncartaButton
+        Left = 923
+        Top = 10
+        Width = 86
+        Height = 22
+        Caption = 'Fechar'
+        Color = clBtnFace
+        ColorBorder = 8556441
+        Enabled = True
+        OnClick = EncartaButton4Click
+        Glyph.Data = {
+          36030000424D3603000000000000360000002800000010000000100000000100
+          18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF824B4B4E1E1FFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF824B4B824B4BA64B4BA9
+          4D4D4E1E1FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          824B4B824B4BB64F50C24F50C54D4EB24D4E4E1E1F824B4B824B4B824B4B824B
+          4B824B4B824B4BFF00FFFF00FFFF00FF824B4BD45859CB5556C95455C95253B7
+          4F524E1E1FFE8B8CFB9A9CF8AAABF7B5B6F7B5B6824B4BFF00FFFF00FFFF00FF
+          824B4BD75C5DD05A5BCF595ACF5758BD53564E1E1F23B54A13C14816BD480CBC
+          41F7B5B6824B4BFF00FFFF00FFFF00FF824B4BDD6364D75F60D55E5FD55C5DC2
+          575A4E1E1F2AB44D1CBF4C1EBC4C13BC45F7B5B6824B4BFF00FFFF00FFFF00FF
+          824B4BE36869DD6566DA6364DE6667C6595B4E1E1F26B14916BC481BBB4910BB
+          43F7B5B6824B4BFF00FFFF00FFFF00FF824B4BEB6D6EE26768E67E7FFAD3D4CC
+          6E704E1E1FA5D89750D16F42C9662DC758F7B5B6824B4BFF00FFFF00FFFF00FF
+          824B4BF27374E96C6DEB8182FCD1D3CF6E704E1E1FFFF2CCFFFFD7FFFFD4E6FC
+          C7F7B5B6824B4BFF00FFFF00FFFF00FF824B4BF87879F07576EE7273F07374D1
+          65664E1E1FFCEFC7FFFFD5FFFFD3FFFFD7F7B5B6824B4BFF00FFFF00FFFF00FF
+          824B4BFE7F80F77A7BF6797AF77779D76B6B4E1E1FFCEFC7FFFFD5FFFFD3FFFF
+          D5F7B5B6824B4BFF00FFFF00FFFF00FF824B4BFF8384FC7F80FB7E7FFE7F80DA
+          6E6F4E1E1FFCEFC7FFFFD5FFFFD3FFFFD5F7B5B6824B4BFF00FFFF00FFFF00FF
+          824B4BFF8889FF8283FF8182FF8283E073744E1E1FFCEFC7FFFFD5FFFFD3FFFF
+          D5F7B5B6824B4BFF00FFFF00FFFF00FF824B4B824B4BE27576FE8182FF8687E5
+          76774E1E1FFAEBC5FCFBD1FCFBCFFCFBD1F7B5B6824B4BFF00FFFF00FFFF00FF
+          FF00FFFF00FF824B4B9C5657CB6C6DCF6E6E4E1E1F824B4B824B4B824B4B824B
+          4B824B4B824B4BFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF824B4B82
+          4B4B4E1E1FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+        ColorOverCaption = clBlack
+        ColorOver = 704216
+        ColorDown = 704216
+        ShowCaption = True
+        ShowHint = True
+        ParentShowHint = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+      end
+      object btConfirmar: TBitBtn
+        Left = 13
+        Top = 8
+        Width = 133
+        Height = 25
+        Caption = '&Confirmar Pagamento'
+        TabOrder = 0
+        Visible = False
+        OnClick = btConfirmarClick
+        Glyph.Data = {
+          36030000424D3603000000000000360000002800000010000000100000000100
+          18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+          FF00FFFF00FFFF00FF331400451B00572200572200471C00361600FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF491C00491C00803200A54100AA
+          4200AA4200A74100843400511F00511F00FF00FFFF00FFFF00FFFF00FFFF00FF
+          5923006E2B00AF4400B14500AA4200A54100AA4200AA4200AF4400B14500702C
+          00361600FF00FFFF00FFFF00FF5923007B3000C54D00B84800AA4200A54100A5
+          4100A74100A74100A74100AA4200B14500702C00511F00FF00FFFF00FF592300
+          D45300CC5000BB4900AA4200B25510F3E3D4F8EFE7C67F42A74100A74100AA42
+          00B14500511F00FF00FF5F2500A03F00EB5C00CC5000B14500AC4300AA4603DA
+          AA7EFFFFFFFCF8F4C4793AA74100A74100AF4400843400451B005F2500D75400
+          EB5C00D45300B14500AA4200AC4300AA4200D5A06FFEFEFCFCF7F3C27738A741
+          00AC43009E3E00451B00772E00F66000F86200FED5AFF8D1ACF4CFABF8D0ABF7
+          CEA6F6CFAAFCF8F6FFFFFFFAF4EECB894FAA4200AA42004F1F00893500FF7813
+          FF6A04FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFCFFFFFFFFFFFFE6C6
+          A7AC4300AA4200572200893500FF8829FF801EF48931FC8C32FC8C31FC8C31F8
+          8225EDA566FEFBF8FFFFFFE9B88CC75A0BB84800A541004B1D00893500FF801E
+          FFAD67FF6400EE5D00FB6300FB6300FC8B30FCEBDAFFFFFFEAAF79CF5200C54D
+          00BB4900953A004B1D00FF00FFE65A00FFC693FF9842E15800EB5C00FB7511FF
+          F8F2FFFFFFF0AC70CF5200CA4F00C04B00C74E00752D00FF00FFFF00FFE65A00
+          FF892BFFDAB7FF9741F86200EA6405FCC695FEB87AE35C01D95500D45300D754
+          00B44600752D00FF00FFFF00FFFF00FFC54D00FF9842FFE2C6FFBB7FFF8728FF
+          750FFF6B05FF6E08FF6E08FF6701CA4F00702C00FF00FFFF00FFFF00FFFF00FF
+          FF00FFFF801EFF801EFFBA7DFFD5ADFFC591FFB574FFA558FF8323D75400D754
+          00FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE15800FF700AFF
+          7D19FF7813FB6300B64700FF00FFFF00FFFF00FFFF00FFFF00FF}
+      end
+      object BitBtn2: TBitBtn
+        Left = 151
+        Top = 8
+        Width = 75
+        Height = 25
+        Caption = '&Fechar'
+        TabOrder = 1
+        Visible = False
+        Kind = bkClose
+      end
+    end
+    object Panel5: TPanel
+      Left = 1
+      Top = 336
+      Width = 784
+      Height = 59
+      Align = alBottom
+      TabOrder = 2
+      object pnlCalc: TPanel
+        Left = 1
+        Top = 1
+        Width = 782
+        Height = 57
+        Align = alClient
+        TabOrder = 0
+        Visible = False
+        object lbl_SubTotal: TLabel
+          Left = 224
+          Top = 24
+          Width = 26
+          Height = 13
+          Caption = '0,00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object lbl_TOTAL: TLabel
+          Left = 464
+          Top = 24
+          Width = 26
+          Height = 13
+          Caption = '0,00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object DBText1: TDBText
+          Left = 16
+          Top = 24
+          Width = 42
+          Height = 13
+          AutoSize = True
+          DataField = 'PRE_NMDESC'
+          DataSource = dsPrestacoes
+        end
+        object Label2: TLabel
+          Left = 224
+          Top = 8
+          Width = 70
+          Height = 13
+          Caption = 'SUB-TOTAL'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = True
+        end
+        object Label3: TLabel
+          Left = 465
+          Top = 8
+          Width = 41
+          Height = 13
+          Caption = 'TOTAL'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = True
+        end
+        object Label4: TLabel
+          Left = 16
+          Top = 8
+          Width = 75
+          Height = 13
+          Caption = 'PRESTAÇÃO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = True
+        end
+        object lbl_Dias: TLabel
+          Left = 565
+          Top = 24
+          Width = 26
+          Height = 13
+          Caption = '0,00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object AOLButton1: TAOLButton
+          Left = 923
+          Top = 18
+          Width = 89
+          Height = 23
+          Caption = 'Gravar no BD'
+          Color = 10840372
+          RaiseColor = 14131850
+          Enabled = True
+          OnClick = AOLButton1Click
+          ShowHint = True
+          ParentShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+        end
+        object lbl_correcao: TLabel
+          Left = 328
+          Top = 24
+          Width = 26
+          Height = 13
+          Caption = '0,00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object lbl_vljuros: TLabel
+          Left = 400
+          Top = 24
+          Width = 26
+          Height = 13
+          Caption = '0,00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label8: TLabel
+          Left = 307
+          Top = 8
+          Width = 59
+          Height = 13
+          Caption = 'VL.CORR.'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = True
+        end
+        object Label6: TLabel
+          Left = 387
+          Top = 8
+          Width = 61
+          Height = 13
+          Caption = 'VL.JUROS'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = True
+        end
+      end
+    end
+    object DBGrid1: TDBGrid
+      Left = 1
+      Top = 56
+      Width = 784
+      Height = 280
+      Align = alClient
+      DataSource = dsPrestacoes
+      Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+      TabOrder = 3
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'MS Sans Serif'
+      TitleFont.Style = []
+      OnDblClick = DBGrid1DblClick
+      OnKeyDown = DBGrid1KeyDown
+      OnKeyPress = DBGrid1KeyPress
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'PRE_CDPRES'
+          Title.Caption = 'N.º RECEB.'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_NMCLIE'
+          Title.Caption = 'CLIENTE'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_NMDESC'
+          Title.Caption = 'DESCRIÇÃO'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_NMINDI'
+          Title.Caption = 'INDICE'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_VLANTE'
+          Title.Caption = 'VL.BASE'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_PECORR'
+          Title.Caption = '%COR.'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_VLCORR_CALC'
+          Title.Caption = 'VL.CORRE.'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_VLSUBT_CALC'
+          Title.Caption = 'SUB-TOTAL'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_PEJURO'
+          Title.Caption = '% JUROS'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_VLJURO_CALC'
+          Title.Caption = 'VL.JUROS'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_TOTAL_CALC'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          Title.Caption = 'VALOR PRESTAÇÃO'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_DTVENC'
+          Title.Caption = 'DT.VCTO'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'PRE_NRPRES'
+          Title.Caption = 'PARCELA'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'PRE_DIASAT'
+          Title.Caption = 'ATRASO'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_VLMULT'
+          Title.Caption = 'MULTA'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_JURVCT'
+          Title.Caption = 'JUROS A/VENC.'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PRE_QTDIAS'
+          Visible = True
+        end>
+    end
+  end
+  object dsReceber: TDataSource
+    DataSet = dmBD.tbContReceber
+    Left = 640
+    Top = 96
+  end
+  object dsHistorico: TDataSource
+    DataSet = dmBD.tbHistorico
+    Left = 705
+    Top = 97
+  end
+  object dsPrestacoes: TDataSource
+    DataSet = dmBD.tbPrestacoes
+    Left = 673
+    Top = 97
+  end
+end
